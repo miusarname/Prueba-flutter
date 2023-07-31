@@ -17,6 +17,7 @@ class Index extends State<MyApp> {
     return MaterialApp(
         title: 'Prueba Flutter',
         home: const Login(),
+        theme: ThemeData(useMaterial3: true),
         debugShowCheckedModeBanner: false,
         routes: {'/secondScreen': (context) => const SecondScreen()});
   }
