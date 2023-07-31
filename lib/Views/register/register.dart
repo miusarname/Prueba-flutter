@@ -24,6 +24,16 @@ class _SecondScreenState extends State<SecondScreen> {
     }
   }
 
+  void _navigateToGifView() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            GifView(), // Creamos una nueva vista llamada GifView
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +68,8 @@ class _SecondScreenState extends State<SecondScreen> {
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
+                    fontFamily:
+                        'Calibri', // Cambiamos el tipo de fuente a "Calibri"
                     color: Colors.black,
                   ),
                 ),
@@ -108,7 +120,7 @@ class _SecondScreenState extends State<SecondScreen> {
                           Radius.circular(4.0),
                         ),
                       ),
-                      labelText: 'Nombre',
+                      labelText: 'Campo 2',
                       labelStyle: TextStyle(
                         color: Colors.grey,
                         fontSize: 16,
@@ -131,7 +143,7 @@ class _SecondScreenState extends State<SecondScreen> {
                           Radius.circular(4.0),
                         ),
                       ),
-                      labelText: 'Correo Electronico',
+                      labelText: 'Campo 2',
                       labelStyle: TextStyle(
                         color: Colors.grey,
                         fontSize: 16,
@@ -154,7 +166,7 @@ class _SecondScreenState extends State<SecondScreen> {
                           Radius.circular(4.0),
                         ),
                       ),
-                      labelText: 'Contraseña',
+                      labelText: 'Campo 2',
                       labelStyle: TextStyle(
                         color: Colors.grey,
                         fontSize: 16,
@@ -177,7 +189,7 @@ class _SecondScreenState extends State<SecondScreen> {
                           Radius.circular(4.0),
                         ),
                       ),
-                      labelText: 'Repetir Contraseña',
+                      labelText: 'Campo 2',
                       labelStyle: TextStyle(
                         color: Colors.grey,
                         fontSize: 16,
@@ -187,7 +199,7 @@ class _SecondScreenState extends State<SecondScreen> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(
+                margin: const EdgeInsets.symmetric(
                     horizontal: 10), // Margen horizontal de 10px
                 child: HeroButton(
                   height: 40,
@@ -199,13 +211,28 @@ class _SecondScreenState extends State<SecondScreen> {
                   fullWidth: true,
                   label: "Ingresar",
                   onPressed: () {
-                    print("Button Clicked!");
+                    _navigateToGifView(); // Navegamos a la nueva vista con el GIF
                   },
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+// Creamos una nueva vista para mostrar el GIF
+class GifView extends StatelessWidget {
+  const GifView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Image.asset(
+            'assets/picture.gif'), // Mostramos el GIF desde los activos
       ),
     );
   }
