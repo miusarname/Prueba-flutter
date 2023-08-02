@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:hero_button/hero_button.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:async';
+import 'package:prueba_flutter/Views/main/index.dart';
 
 class SecondScreen extends StatefulWidget {
   const SecondScreen({super.key});
@@ -29,7 +31,7 @@ class _SecondScreenState extends State<SecondScreen> {
       context,
       MaterialPageRoute(
         builder: (context) =>
-            GifView(), // Creamos una nueva vista llamada GifView
+            const GifView(), // Creamos una nueva vista llamada GifView
       ),
     );
   }
@@ -56,20 +58,20 @@ class _SecondScreenState extends State<SecondScreen> {
         ),
       ),
       body: Container(
-        color: Color(
+        color: const Color(
             0xFFF9FBFC), // Establecemos el color de fondo de toda la página
         child: SingleChildScrollView(
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.fromLTRB(5, 15, 150, 1),
+                padding: EdgeInsets.fromLTRB(5, 15, 100, 1),
                 child: Text(
                   "Crear cuenta",
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
                     fontFamily:
-                        'Calibri', // Cambiamos el tipo de fuente a "Calibri"
+                        'MonaB', // Cambiamos el tipo de fuente a "Calibri"
                     color: Colors.black,
                   ),
                 ),
@@ -95,7 +97,10 @@ class _SecondScreenState extends State<SecondScreen> {
                               child: const Center(
                                 child: Text(
                                   "Subir Imagen",
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'MonaR',
+                                  ),
                                 ),
                               ),
                             ),
@@ -120,8 +125,9 @@ class _SecondScreenState extends State<SecondScreen> {
                           Radius.circular(4.0),
                         ),
                       ),
-                      labelText: 'Campo 2',
+                      labelText: 'Nombre',
                       labelStyle: TextStyle(
+                        fontFamily: 'MonaR',
                         color: Colors.grey,
                         fontSize: 16,
                       ),
@@ -143,8 +149,9 @@ class _SecondScreenState extends State<SecondScreen> {
                           Radius.circular(4.0),
                         ),
                       ),
-                      labelText: 'Campo 2',
+                      labelText: 'Correo Electronico',
                       labelStyle: TextStyle(
+                        fontFamily: 'MonaR',
                         color: Colors.grey,
                         fontSize: 16,
                       ),
@@ -166,8 +173,9 @@ class _SecondScreenState extends State<SecondScreen> {
                           Radius.circular(4.0),
                         ),
                       ),
-                      labelText: 'Campo 2',
+                      labelText: 'Contraseña',
                       labelStyle: TextStyle(
+                        fontFamily: 'MonaR',
                         color: Colors.grey,
                         fontSize: 16,
                       ),
@@ -189,8 +197,9 @@ class _SecondScreenState extends State<SecondScreen> {
                           Radius.circular(4.0),
                         ),
                       ),
-                      labelText: 'Campo 2',
+                      labelText: 'Repetir Contraseña',
                       labelStyle: TextStyle(
+                        fontFamily: 'MonaR',
                         color: Colors.grey,
                         fontSize: 16,
                       ),
@@ -223,16 +232,34 @@ class _SecondScreenState extends State<SecondScreen> {
   }
 }
 
-// Creamos una nueva vista para mostrar el GIF
-class GifView extends StatelessWidget {
-  const GifView({super.key});
+
+class GifView extends StatefulWidget {
+  const GifView({Key? key}) : super(key: key);
+
+  @override
+  _GifViewState createState() => _GifViewState();
+}
+
+class _GifViewState extends State<GifView> {
+  @override
+  void initState() {
+    super.initState();
+    // Wait 5 seconds and then navigate to the next view.
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Index(),
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset(
-            'assets/picture.gif'), // Mostramos el GIF desde los activos
+        child: Image.asset('assets/picture.gif'), // Show the GIF from assets
       ),
     );
   }

@@ -29,6 +29,12 @@ dependencies:
   hero_button: ^1.0.4
   image_picker: ^1.0.1
   video_player: ^2.7.0
+  flutter_gif: ^0.0.4
+  gif: ^2.2.0
+  flutter_custom_cards: ^0.2.1
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  path_provider: ^2.0.15
 
 dev_dependencies:
   flutter_test:
@@ -42,3 +48,15 @@ flutter:
     - assets/picture.gif
     - assets/picture.mp4
     # Agrega más rutas aquí si tienes más assets
+
+  # Agrega la sección "fonts" con la ruta de tu fuente personalizada
+  fonts:
+    - family: MonaB
+      fonts:
+        - asset: fonts/Mona-Sans-Bold.ttf
+    - family: MonaEB
+      fonts:
+        - asset: fonts/Mona-Sans-ExtraBold.ttf
+    - family: MonaR
+      fonts:
+        - asset: fonts/Mona-Sans-Regular.ttf

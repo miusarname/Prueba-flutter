@@ -1,15 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:hero_button/hero_button.dart';
 import 'package:prueba_flutter/Views/register/register.dart';
+import 'package:prueba_flutter/functions/db/database_helper.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
+  const Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+  final dbHelper = DatabaseHelper.instance;
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _login() async {
+    final username = _usernameController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (username.isNotEmpty && password.isNotEmpty) {
+      final user = await dbHelper.loginUser(username, password);
+      if (user != null) {
+        // Usuario válido, hacer algo aquí (por ejemplo, navegar a otra pantalla)
+        print("Usuario válido");
+      } else {
+        // Usuario inválido, mostrar mensaje de error
+        print("Usuario inválido");
+      }
+    } else {
+      // Campos vacíos, mostrar mensaje de error
+      print("Llene todos los campos");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,47 +49,45 @@ class _LoginState extends State<Login> {
           mainAxisAlignment:
               MainAxisAlignment.end, // Alineación en la parte inferior
           children: [
-            const Padding(
-              padding: EdgeInsets.all(16.0),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: TextField(
-                style:
-                    TextStyle(color: Colors.grey), // Establecer color de texto
-                decoration: InputDecoration(
+                controller: _usernameController,
+                style: const TextStyle(color: Colors.grey), // Establecer color de texto
+                decoration: const InputDecoration(
                   filled: true,
                   fillColor: Colors.brown, // Establecer fondo blanco
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(4.0), // Establecer el radio del borde
                     ),
-                    borderSide:
-                        BorderSide.none, // Sin borde en el borde exterior
                   ),
-                  labelText: 'Correo Electronico',
+                  labelText: 'Correo Electrónico',
                   labelStyle: TextStyle(
-                    color: Colors.white, // Establecer color de etiqueta
+                    color: Colors.white,
+                    fontFamily: 'MonaR', // Establecer color de etiqueta
                   ),
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(16.0),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: TextField(
+                controller: _passwordController,
                 obscureText: true,
-                style:
-                    TextStyle(color: Colors.grey), // Establecer color de texto
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.grey), // Establecer color de texto
+                decoration: const InputDecoration(
                   filled: true,
                   fillColor: Colors.brown, // Establecer fondo blanco
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(4.0), // Establecer el radio del borde
                     ),
-                    borderSide:
-                        BorderSide.none, // Sin borde en el borde exterior
                   ),
-                  labelText: 'Constraseña',
+                  labelText: 'Contraseña',
                   labelStyle: TextStyle(
-                    color: Colors.white, // Establecer color de etiqueta
+                    color: Colors.white,
+                    fontFamily: 'MonaR', // Establecer color de etiqueta
                   ),
                 ),
               ),
@@ -80,14 +102,13 @@ class _LoginState extends State<Login> {
               fullWidth: true,
               label: "Ingresar",
               onPressed: () {
-                print("Button Clicked!");
+                _login();
               },
             ),
             HeroButton(
               height: 40,
               borderRound: false,
-              textColor:
-                  const Color(0xFFC19679), // Establecer color hexadecimal aquí
+              textColor: const Color(0xFFC19679), // Establecer color hexadecimal aquí
               textSize: 20,
               backColor: Colors.transparent, // Relleno transparente
               padding: const EdgeInsets.all(20),
@@ -102,30 +123,30 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-}
 
-// Función para navegar a la segunda pantalla
-void _navigateToSecondScreen(BuildContext context) {
-  Navigator.push(
-    context,
-    PageRouteBuilder(
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0); // Posición inicial (derecha)
-        const end = Offset.zero; // Posición final (centro)
-        const curve = Curves.easeInOut; // Curva de animación
+  // Función para navegar a la segunda pantalla
+  void _navigateToSecondScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0); // Posición inicial (derecha)
+          const end = Offset.zero; // Posición final (centro)
+          const curve = Curves.easeInOut; // Curva de animación
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        var offsetAnimation = animation.drive(tween);
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          var offsetAnimation = animation.drive(tween);
 
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return SecondScreen(); // Retornamos la segunda pantalla
-      },
-    ),
-  );
+          return SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          );
+        },
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return const SecondScreen(); // Retornamos la segunda pantalla
+        },
+      ),
+    );
+  }
 }
